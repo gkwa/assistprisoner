@@ -4,7 +4,7 @@
 #+begin_example
 docker run -ti gpg:latest bash
 gpg --batch --passphrase 'mysecret' --quick-gen-key myNameMyLastName@gmail.com default default 2>&1 | tee -a /tmp/log
-key=$(grep -E 'key.*marked as ultimately trusted' /tmp/log | awk '{print $3}')
+key=$(gpg -k --with-colons | grep "^fpr" | head -n1 | cut -d: -f10)
 pass init $key
 pass insert Business/cheese-whiz-factory
 pass generate Business/cheese-whiz-factory1
